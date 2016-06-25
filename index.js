@@ -35,7 +35,7 @@ new Promise(function (resolve, reject) {
   showCwd
 ).then(function (ok) {
   if (!ok) {
-    return;
+    return false;
   }
   exec(`solc foo.sol ${solcArgs}`, spawnOptions, (error, stdout, stderr) => {
     if (error) {
