@@ -1,8 +1,13 @@
 var exec = require('child_process').exec;
 var fs = require('fs');
-
 var express = require('express');
+var bodyParser = require('body-parser');
+
 var app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
 var spawnOptions =  {
   'cwd': '/dev/shm'
@@ -24,12 +29,12 @@ var showCwd = function () {
   });
 };
 
-var compile = function () {
+var compile = function (src) {
   // PoC for running cli solc from node
   return new Promise(function (resolve, reject) {
 
     // save the input to a temp file
-    fs.writeFile(spawnOptions.cwd + "/foo.sol", "contract abstract {}", function (err) {
+    fs.writeFile(spawnOptions.cwd + "/foo.sol", src, function (err) {
       if (err) {
         reject(Promise.reject(err));
         return;
@@ -63,9 +68,9 @@ var compile = function () {
 };
 
 app.post('/solc', function (req, res) {
-  compile().then(function (result) {
+  var src = req.body.src;
+  compile(src).then(function (result) {
     res.setHeader('Content-Type', 'application/json');
-    console.log(result);
     res.send(result);
   },
   function (err) {
