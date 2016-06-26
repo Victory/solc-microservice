@@ -62,7 +62,7 @@ var compile = function () {
   });
 };
 
-app.get('/', function (req, res) {
+app.post('/solc', function (req, res) {
   compile().then(function (result) {
     res.setHeader('Content-Type', 'application/json');
     console.log(result);
