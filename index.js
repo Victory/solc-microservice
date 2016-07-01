@@ -44,7 +44,6 @@ var compile = function (src) {
   }).then(
     function () {
       // debug
-      console.log('done writting');
       return true;
     },
     showCwd // note the cwd
@@ -67,6 +66,9 @@ var compile = function (src) {
   });
 };
 
+/**
+ * Listen for "src" data to be posted, compile that code data with solc and return the results as json
+ */
 app.post('/solc', function (req, res) {
   var src = req.body.src;
   compile(src).then(function (result) {
