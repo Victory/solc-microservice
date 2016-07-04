@@ -43,7 +43,6 @@ var compile = function (src) {
     });
   }).then(
     function () {
-      // debug
       return true;
     },
     showCwd // note the cwd
@@ -81,6 +80,6 @@ app.post('/solc', function (req, res) {
 });
 
 app.listen(3000, function () {
-  console.log('Example app listening on port 3000!');
+  console.log('Solc compiler listening on port 3000!');
 });
 
